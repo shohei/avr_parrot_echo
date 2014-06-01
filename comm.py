@@ -3,12 +3,13 @@ import threading
 import sys
 import commands
 
-status, output = commands.getstatusoutput("ls /dev/tty.usb*")
-dev_port = output
-if(dev_port==""):
+try:
+    status, output = commands.getstatusoutput("ls /dev/tty.usb*")
+    dev_port = output
+    s = serial.Serial(port=dev_port,baudrate=9600)
+except:
     print "No usb device found."
     exit()
-s = serial.Serial(port=dev_port,baudrate=9600)
 
 def thread2():
     while True:
