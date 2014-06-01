@@ -1,8 +1,14 @@
 import serial
 import threading
 import sys
+import commands
 
-s = serial.Serial(port="/dev/tty.usbmodem1411",baudrate=9600)
+status, output = commands.getstatusoutput("ls /dev/tty.usb*")
+dev_port = output
+if(dev_port==""):
+    print "No usb device found."
+    exit()
+s = serial.Serial(port=dev_port,baudrate=9600)
 
 def thread2():
     while True:
